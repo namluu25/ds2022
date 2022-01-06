@@ -11,6 +11,6 @@ USTH ICT 2022 Distributed Systems
 Group Info
 =======================
 
-* Name 1 (ID1)
+* Nguyen Hoang Minh (Bi9-166)
 * Name 2 (ID2)
 
