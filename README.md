@@ -12,5 +12,5 @@ Group Info
 =======================
 
 * Nguyen Hoang Minh (BI9-166)
-* Name 2 (ID2)
+* Nguyen Chi Thanh (BI9-211)
 
