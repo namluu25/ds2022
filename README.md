@@ -13,4 +13,7 @@ Group Info
 
 * Nguyen Hoang Minh (BI9-166)
 * Nguyen Chi Thanh (BI9-211)
+* Luu Hai Nam (BI9-170)
+* Trinh Tuan Minh (BI9-168)
+* Dinh Nguyen Viet Hung (BI9-111)
 
