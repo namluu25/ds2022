@@ -11,6 +11,8 @@ USTH ICT 2022 Distributed Systems
 Group Info
 =======================
 
-* Nguyễn Hoàng Minh (BI9-166)
-* Lưu Hải Nam (BI9-170)
-
+* Luu Hai Nam (BI9-170)
+* Nguyen Hoang Minh (BI9-166)
+* Nguyen Chi Thanh (BI9-211)
+* Dinh Nguyen Viet Hung (BI9-111)
+* Trinh Tuan Minh (BI9-168)
