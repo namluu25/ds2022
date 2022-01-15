@@ -11,6 +11,6 @@ USTH ICT 2022 Distributed Systems
 Group Info
 =======================
 
-* Name 1 (ID1)
-* Name 2 (ID2)
+* Nguyễn Hoàng Minh (BI9-166)
+* Lưu Hải Name (BI9-170)
 
