@@ -12,5 +12,5 @@ Group Info
 =======================
 
 * Nguyễn Hoàng Minh (BI9-166)
-* Lưu Hải Name (BI9-170)
+* Lưu Hải Nam (BI9-170)
 
