@@ -1,80 +1,67 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <netdb.h>
-#include <ctype.h>
-#include <string.h>
+#include <arpa/inet.h>
+#define SIZE 1024
 
-void error(const char *msg)
-{
-    perror(msg);
-    exit(1);
+void write_file(int sockfd){
+  int n;
+  FILE *fp;
+  char *filename = "recv.txt";
+  char buffer[SIZE];
+
+  fp = fopen(filename, "w");
+  while (1) {
+    n = recv(sockfd, buffer, SIZE, 0);
+    if (n <= 0){
+      break;
+      return;
+    }
+    fprintf(fp, "%s", buffer);
+    bzero(buffer, SIZE);
+  }
+  return;
 }
 
-int main(int argc, char* argv[]) {
-    int portno = atoi(argv[1]);
-    int ss, cli, pid;
-    struct sockaddr_in server_addr, cli_addr;
-    char s[512];
-    socklen_t serv_length, cli_len;
-    serv_length = sizeof(server_addr);
-    cli_len = sizeof(cli_addr);
+int main(){
+  char *ip = "127.0.0.1";
+  int port = 8080;
+  int e;
 
-    // create the socket
-    ss = socket(AF_INET, SOCK_STREAM, 0);
+  int sockfd, new_sock;
+  struct sockaddr_in server_addr, new_addr;
+  socklen_t addr_size;
+  char buffer[SIZE];
 
-    if (ss < 0) {
-        error("ERROR opening socker!");
-    }
+  sockfd = socket(AF_INET, SOCK_STREAM, 0);
+  if(sockfd < 0) {
+    perror("[-]Error in socket");
+    exit(1);
+  }
+  printf("[+]Server socket created successfully.\n");
 
-    // bind the socket to given port
-    memset(&server_addr, 0, sizeof(server_addr));
-    server_addr.sin_family = AF_INET;
-    server_addr.sin_addr.s_addr = INADDR_ANY;
-    server_addr.sin_port = htons(portno);
-    bind(ss, (struct sockaddr *) &server_addr, serv_length);
+  server_addr.sin_family = AF_INET;
+  server_addr.sin_port = port;
+  server_addr.sin_addr.s_addr = inet_addr(ip);
 
-    // then listen
-    listen(ss, 0);
+  e = bind(sockfd, (struct sockaddr*)&server_addr, sizeof(server_addr));
+  if(e < 0) {
+    perror("[-]Error in bind");
+    exit(1);
+  }
+  printf("[+]Binding successfull.\n");
 
-    cli = accept(ss, (struct sockaddr *) &cli_addr, &cli_len);
+  if(listen(sockfd, 10) == 0){
+    printf("[+]Listening....\n");
+  }else{
+    perror("[-]Error in listening");
+        exit(1);
+  }
 
-    if (cli < 0) {
-        error("ERROR accepting");
-    }
+  addr_size = sizeof(new_addr);
+  new_sock = accept(sockfd, (struct sockaddr*)&new_addr, &addr_size);
+  write_file(new_sock);
+  printf("[+]Data written in the file successfully.\n");
 
-    pid = fork();
-    if (pid == 0) {
-        // I'm the son, I'll serve this client
-        printf("Client sending file...\n");
-        FILE *file_pointer;
-        int words , ch;
-        ch = 0;
-        printf("I got here\n");
-
-        file_pointer = fopen("received_file.txt", "a");
-        read(cli, &words, sizeof(int));
-        printf("Is this magic?\n");
-
-        printf("Passed integer is : %d\n" , words);
-
-        while(ch != words) {
-            read(cli, s, 512);
-            fprintf(file_pointer, " %s", s);
-            printf("%s %d\n", s , ch);
-            ch++;
-        }
-        printf("Almost there\n");
-
-        printf("File was received successfully\n");
-        printf("New file created is received_file.txt");
-    
-        // disconnect
-        close(cli);
-        close(ss);
-        
-        return 0;
-    }
+  return 0;
 }
