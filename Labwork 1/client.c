@@ -49,7 +49,7 @@ void send_file(FILE *fp, int socket){
        char data[1024] = {0};
        while(fread(data, 1,1024, fp) != 0){
                if ((socket, data, sizeof(data), 0) == -1){
-                       printf("Error in sending file");
+                       printf("Error in sending data");
                        exit(1);
                }
        bzero(data, 1024);
