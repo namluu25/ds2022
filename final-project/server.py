@@ -99,7 +99,7 @@ def serve(ip):
     server.start()
     try:
         while True:
-            time.sleep(60 * 60 * 24) # 24h in second
+            time.sleep(60 * 60 * 24) # 24h in seconds
     except KeyboardInterrupt:
         server.stop(0)
 
