@@ -17,3 +17,4 @@ Group Info
 * Trinh Tuan Minh (BI9-168)
 * Dinh Nguyen Viet Hung (BI9-111)
 
+## [Report](https://docs.google.com/document/d/1cBpWG7c44YkINQtYY_x-dKCH46umXsP5Ab0Ola127yE/edit#)
