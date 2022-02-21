@@ -50,7 +50,7 @@ def run():
                     if KeyboardInterrupt or choice == 3:
                         break
         else:
-            print('Not a avalid IP!')
+            print('Not a valid IP!')
 
 
 if __name__ == '__main__':

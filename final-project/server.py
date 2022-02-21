@@ -21,11 +21,11 @@ def parseArgs():
     args = parser.parse_args()
 
     if ping.isValidIP(args.ip) == False:
-        print("not a valid IP address: '%s'" % args.ip)
+        print("Not a valid IP address: '%s'" % args.ip)
 
     for peerIP in args.peers:
         if ping.isValidIP(peerIP) == False:
-            print("not a valid peer IP address: '%s'" % peerIP)
+            print("Not a valid peer IP address: '%s'" % peerIP)
         if peerIP != args.ip:
             if (peerIP in peers) == False:
                 peers.append(peerIP)
@@ -38,11 +38,11 @@ class Storer(kv_pb2_grpc.ClientServicer):
     def Get(self, request, context):
         key = request.key
         if key in store:
-            print("received GET request for key '{0:s}': value = '{1:s}'".format(
+            print("Received GET request for key '{0:s}': value = '{1:s}'".format(
                 key, store[key]))
             return kv_pb2.GetReply(value=store[key], defined=True)
         else:
-            print("received GET request for key '%s': value = undefined" % key)
+            print("Received GET request for key '%s': value = undefined" % key)
             return kv_pb2.GetReply(value=None, defined=False)
 
     def Set(self, request, context):
@@ -52,20 +52,20 @@ class Storer(kv_pb2_grpc.ClientServicer):
         store[key] = value
         if broadcast:
             print(
-                "received SET request for key '{0:s}': new value = '{1:s}'".format(key, value))
+                "Received SET request for key '{0:s}': new value = '{1:s}'".format(key, value))
             updatePeers(key, value)
         else:
             print(
-                "received peer update for key '{0:s}': new value = '{1:s}'".format(key, value))
+                "Received peer update for key '{0:s}': new value = '{1:s}'".format(key, value))
         return kv_pb2.SetReply(value=value)
 
     def List(self, request, context):
-        print("received LIST request")
+        print("Received LIST request")
         return kv_pb2.StoreReply(store=store)
 
     def RegisterWithPeer(self, request, context):
         peerIP = request.ip
-        print("received new peer registration: %s" % peerIP)
+        print("Received new peer registration: %s" % peerIP)
         if ping.isValidIP(peerIP):
             if (peerIP in peers) == False:
                 peers.append(peerIP)
@@ -76,7 +76,7 @@ def createSlave(peerIP):
     global store
     with grpc.insecure_channel(peerIP) as channel:
         stub = kv_pb2_grpc.ClientStub(channel)
-        print("registering with peer %s..." % peerIP)
+        print("Registering with peer %s..." % peerIP)
         response = stub.RegisterWithPeer(kv_pb2.IP(ip=args.ip))
         for key in response.store:
             store[key] = response.store[key]
@@ -84,7 +84,7 @@ def createSlave(peerIP):
 
 def updatePeers(key, value):
     for peerIP in peers:
-        print("updating peer '{0:s}': '${1:s}' = '${2:s}'".format(
+        print("Updating peer '{0:s}': '${1:s}' = '${2:s}'".format(
             peerIP, key, value))
         with grpc.insecure_channel(peerIP) as channel:
             stub = kv_pb2_grpc.ClientStub(channel)
