@@ -6,7 +6,7 @@ import kv_pb2 as kv__pb2
 
 
 class ClientStub(object):
-    """The client service definition.
+    """Used by the client to connect to a gRPC service.
     """
 
     def __init__(self, channel):
@@ -38,7 +38,7 @@ class ClientStub(object):
 
 
 class ClientServicer(object):
-    """The client service definition.
+    """Used by the server to implement a gRPC service.
     """
 
     def Get(self, request, context):
